@@ -1,0 +1,115 @@
+﻿<Page
+    x:Class="PianoTrainingMidi.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PianoTrainingMidi"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:c="using:PianoTrainingMidi.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[0].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[0].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[0].IsActive}" />
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[1].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[1].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[1].IsActive}" />
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[2].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[2].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[2].IsActive}" />
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[3].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[3].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[3].IsActive}" />
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[4].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[4].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[4].IsActive}" />
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[5].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[5].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[5].IsActive}" />
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[6].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[6].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[6].IsActive}" />
+
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[7].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[7].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[7].IsActive}" />
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[8].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[8].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[8].IsActive}" />
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[9].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[9].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[9].IsActive}" />
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[10].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[10].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[10].IsActive}" />
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[11].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[11].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[11].IsActive}" />
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[12].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[12].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[12].IsActive}" />
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[13].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[13].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[13].IsActive}" />
+
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[14].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[14].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[14].IsActive}" />
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[15].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[15].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[15].IsActive}" />
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[16].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[16].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[16].IsActive}" />
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[17].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[17].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[17].IsActive}" />
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[18].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[18].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[18].IsActive}" />
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[19].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[19].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[19].IsActive}" />
+                    <c:WhiteKey MidiNote="{x:Bind ViewModel.Notes[20].MidiNote}" 
+                                NoteLetter="{x:Bind ViewModel.Notes[20].NoteLetter}" 
+                                IsActive="{x:Bind ViewModel.Notes[20].IsActive}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
+                        <c:BlackKey MidiNote="49" Margin="28,0,0,0" />
+                        <c:BlackKey MidiNote="51" Margin="28,0,0,0" />
+                        <c:BlackKey MidiNote="54" Margin="60,0,0,0" />
+                        <c:BlackKey MidiNote="56" Margin="28,0,0,0" />
+                        <c:BlackKey MidiNote="58" Margin="26,0,0,0" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="26,0,0,0">
+                        <c:BlackKey MidiNote="61" Margin="28,0,0,0" />
+                        <c:BlackKey MidiNote="63" Margin="28,0,0,0" />
+                        <c:BlackKey MidiNote="66" Margin="60,0,0,0" />
+                        <c:BlackKey MidiNote="68" Margin="28,0,0,0" />
+                        <c:BlackKey MidiNote="70" Margin="26,0,0,0" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="26,0,0,0">
+                        <c:BlackKey MidiNote="73" Margin="28,0,0,0" />
+                        <c:BlackKey MidiNote="75" Margin="28,0,0,0" />
+                        <c:BlackKey MidiNote="78" Margin="60,0,0,0" />
+                        <c:BlackKey MidiNote="80" Margin="28,0,0,0" />
+                        <c:BlackKey MidiNote="82" Margin="26,0,0,0" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
