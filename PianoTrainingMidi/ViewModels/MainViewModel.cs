@@ -1,66 +1,295 @@
 ﻿using PianoTrainingMidi.Helpers;
 using PianoTrainingMidi.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using Windows.UI;
+using Windows.UI.Xaml.Media;
 
 namespace PianoTrainingMidi.ViewModels
 {
     public class MainViewModel : BaseObject
     {
-        #region property Notes
-        private List<Note> _notes = new List<Note>();
-        public List<Note> Notes
+        #region property Chords
+        private Chords _chords = new Chords();
+        public Chords Chords
         {
-            get { return _notes; }
-            set { SetProperty(ref _notes, value); }
+            get { return _chords; }
+            set { SetProperty(ref _chords, value); }
+        }
+        #endregion
+
+        #region property ChordsSelected
+        private List<Chord> _chordsSelected;
+        public List<Chord> ChordsSelected
+        {
+            get { return _chordsSelected; }
+            set { SetProperty(ref _chordsSelected, value); }
+        }
+        #endregion
+
+        #region property NotesPlayed
+        private ObservableCollection<Note> _notesPlayed = new ObservableCollection<Note>();
+        public ObservableCollection<Note> NotesPlayed
+        {
+            get { return _notesPlayed; }
+            set { SetProperty(ref _notesPlayed, value); }
+        }
+        #endregion
+
+        #region property ChordToPlayString
+        private string _chordToPlayString = "";
+        public string ChordToPlayString
+        {
+            get { return _chordToPlayString; }
+            set { SetProperty(ref _chordToPlayString, value); }
+        }
+        #endregion
+
+        #region property ChordPlayed
+        private Chord _chordPlayed;
+        public Chord ChordPlayed
+        {
+            get { return _chordPlayed; }
+            set { SetProperty(ref _chordPlayed, value); OnPropertyChanged(nameof(ChordPlayedString)); }
+        }
+        #endregion
+
+        #region property ChordPlayedString
+        public string ChordPlayedString
+        {
+            get 
+            { 
+                if (!IsGameActive)
+                {
+                    return "";
+                }
+                return ChordPlayed == null ? "" : ChordPlayed.Name; }
+        }
+        #endregion
+
+        #region property ChordPlayedBackground
+        private SolidColorBrush _chordPlayedBackground = new SolidColorBrush(Colors.Transparent);
+        public SolidColorBrush ChordPlayedBackground
+        {
+            get { return _chordPlayedBackground; }
+            set { SetProperty(ref _chordPlayedBackground, value); }
+        }
+        #endregion
+
+
+        #region property MajorChord
+        private bool _majorChord;
+        public bool MajorChord
+        {
+            get { return _majorChord; }
+            set { SetProperty(ref _majorChord, value); SelectChords(); }
+        }
+        #endregion
+
+        #region property MajorChordInv1
+        private bool _majorChordInv1;
+        public bool MajorChordInv1
+        {
+            get { return _majorChordInv1; }
+            set { SetProperty(ref _majorChordInv1, value); SelectChords(); }
+        }
+        #endregion
+
+        #region property MajorChordInv2
+        private bool _majorChordInv2;
+        public bool MajorChordInv2
+        {
+            get { return _majorChordInv2; }
+            set { SetProperty(ref _majorChordInv2, value); SelectChords(); }
+        }
+        #endregion
+
+        #region property MinorChord
+        private bool _minorChord;
+        public bool MinorChord
+        {
+            get { return _minorChord; }
+            set { SetProperty(ref _minorChord, value); SelectChords(); }
+        }
+        #endregion
+
+        #region property MinorChordInv1
+        private bool _minorChordInv1;
+        public bool MinorChordInv1
+        {
+            get { return _minorChordInv1; }
+            set { SetProperty(ref _minorChordInv1, value); SelectChords(); }
+        }
+        #endregion
+
+        #region property MinorChordInv2
+        private bool _minorChordInv2;
+        public bool MinorChordInv2
+        {
+            get { return _minorChordInv2; }
+            set { SetProperty(ref _minorChordInv2, value); SelectChords(); }
+        }
+        #endregion
+
+
+        #region property MidiDeviceName
+        private string _midiDeviceName;
+        public string MidiDeviceName
+        {
+            get { return _midiDeviceName; }
+            set { SetProperty(ref _midiDeviceName, value); }
+        }
+        #endregion
+
+
+        #region property Game
+        private Game _game;
+        public Game Game
+        {
+            get { return _game; }
+            set { SetProperty(ref _game, value); }
+        }
+        #endregion
+
+        #region property IsGameActive
+        public bool IsGameActive
+        {
+            get { return Game != null && Game.ChordToPlay != null; }
+        }
+        #endregion
+
+        #region property CanStartGame
+        private bool _canStartGame;
+        public bool CanStartGame
+        {
+            get { return _canStartGame; }
+            set { SetProperty(ref _canStartGame, value); }
         }
         #endregion
 
         public MainViewModel()
         {
-            Notes.Add(new Note { MidiNote = 48, NoteLetter = "C", NoteAlternative = "C", Octave = 3 });
-            Notes.Add(new Note { MidiNote = 49, NoteLetter = "C#", NoteAlternative = "D♭", Octave = 3 });
-            Notes.Add(new Note { MidiNote = 50, NoteLetter = "D", NoteAlternative = "D", Octave = 3 });
-            Notes.Add(new Note { MidiNote = 51, NoteLetter = "D#", NoteAlternative = "E♭", Octave = 3 });
-            Notes.Add(new Note { MidiNote = 52, NoteLetter = "E", NoteAlternative = "E", Octave = 3 });
-            Notes.Add(new Note { MidiNote = 53, NoteLetter = "F", NoteAlternative = "F", Octave = 3 });
-            Notes.Add(new Note { MidiNote = 54, NoteLetter = "F#", NoteAlternative = "G♭", Octave = 3 });
-            Notes.Add(new Note { MidiNote = 55, NoteLetter = "G", NoteAlternative = "G", Octave = 3 });
-            Notes.Add(new Note { MidiNote = 56, NoteLetter = "G#", NoteAlternative = "A♭", Octave = 3 });
-            Notes.Add(new Note { MidiNote = 57, NoteLetter = "A", NoteAlternative = "A", Octave = 3 });
-            Notes.Add(new Note { MidiNote = 58, NoteLetter = "A#", NoteAlternative = "B♭", Octave = 3 });
-            Notes.Add(new Note { MidiNote = 59, NoteLetter = "B", NoteAlternative = "B", Octave = 3 });
+            MajorChord = true;
+            SelectChords();
 
-            Notes.Add(new Note { MidiNote = 60, NoteLetter = "C", NoteAlternative = "C", Octave = 4 });
-            Notes.Add(new Note { MidiNote = 61, NoteLetter = "C#", NoteAlternative = "D♭", Octave = 4 });
-            Notes.Add(new Note { MidiNote = 62, NoteLetter = "D", NoteAlternative = "D", Octave = 4 });
-            Notes.Add(new Note { MidiNote = 63, NoteLetter = "D#", NoteAlternative = "E♭", Octave = 4 });
-            Notes.Add(new Note { MidiNote = 64, NoteLetter = "E", NoteAlternative = "E", Octave = 4 });
-            Notes.Add(new Note { MidiNote = 65, NoteLetter = "F", NoteAlternative = "F", Octave = 4 });
-            Notes.Add(new Note { MidiNote = 66, NoteLetter = "F#", NoteAlternative = "G♭", Octave = 4 });
-            Notes.Add(new Note { MidiNote = 67, NoteLetter = "G", NoteAlternative = "G", Octave = 4 });
-            Notes.Add(new Note { MidiNote = 68, NoteLetter = "G#", NoteAlternative = "A♭", Octave = 4 });
-            Notes.Add(new Note { MidiNote = 69, NoteLetter = "A", NoteAlternative = "A", Octave = 4 });
-            Notes.Add(new Note { MidiNote = 70, NoteLetter = "A#", NoteAlternative = "B♭", Octave = 4 });
-            Notes.Add(new Note { MidiNote = 71, NoteLetter = "B", NoteAlternative = "B", Octave = 4 });
-
-            Notes.Add(new Note { MidiNote = 72, NoteLetter = "C", NoteAlternative = "C", Octave = 5 });
-            Notes.Add(new Note { MidiNote = 73, NoteLetter = "C#", NoteAlternative = "D♭", Octave = 5 });
-            Notes.Add(new Note { MidiNote = 74, NoteLetter = "D", NoteAlternative = "D", Octave = 5 });
-            Notes.Add(new Note { MidiNote = 75, NoteLetter = "D#", NoteAlternative = "E♭", Octave = 5 });
-            Notes.Add(new Note { MidiNote = 76, NoteLetter = "E", NoteAlternative = "E", Octave = 5 });
-            Notes.Add(new Note { MidiNote = 77, NoteLetter = "F", NoteAlternative = "F", Octave = 5 });
-            Notes.Add(new Note { MidiNote = 78, NoteLetter = "F#", NoteAlternative = "G♭", Octave = 5 });
-            Notes.Add(new Note { MidiNote = 79, NoteLetter = "G", NoteAlternative = "G", Octave = 5 });
-            Notes.Add(new Note { MidiNote = 80, NoteLetter = "G#", NoteAlternative = "A♭", Octave = 5 });
-            Notes.Add(new Note { MidiNote = 81, NoteLetter = "A", NoteAlternative = "A", Octave = 5 });
-            Notes.Add(new Note { MidiNote = 82, NoteLetter = "A#", NoteAlternative = "B♭", Octave = 5 });
-            Notes.Add(new Note { MidiNote = 83, NoteLetter = "B", NoteAlternative = "B", Octave = 5 });
+            CanStartGame = true;
         }
 
-        public Note GetNote(int midiNote)
+        public void StartNewGame()
         {
-            return Notes.FirstOrDefault(x => x.MidiNote == midiNote);
+            CanStartGame = false;
+
+            Game = new Game(Chords.ChordsList, ChordsSelected);
+
+            Game.SelectNextChordToPlay();
+            ChordToPlayString = Game.ChordToPlay == null ? "" : Game.ChordToPlay.Name;
+
+            ChordPlayed = null;
+            OnPropertyChanged(nameof(IsGameActive));
+            ChordPlayedBackground = new SolidColorBrush(Colors.Transparent);
+        }
+
+        public void StopGame()
+        {
+            CanStartGame = true;
+
+            Game = null;
+
+            ChordToPlayString = "";
+            ChordPlayed = null;
+            OnPropertyChanged(nameof(IsGameActive));
+            ChordPlayedBackground = new SolidColorBrush(Colors.Transparent);
+        }
+
+        public void NextChord()
+        {
+            if (Game != null && Game.ChordToPlay != null)
+            {
+                if (Game.SelectNextChordToPlay())
+                {
+                    ChordToPlayString = Game.ChordToPlay == null ? "" : Game.ChordToPlay.Name;
+                    ChordPlayed = null;
+                }
+                else
+                {
+                    ChordToPlayString = "";
+                    CanStartGame = false;
+                }
+            }
+
+            ChordPlayedBackground = new SolidColorBrush(Colors.Transparent);
+            OnPropertyChanged(nameof(IsGameActive));
+        }
+
+        public void SelectNote(int midiNote)
+        {
+            if (_notesPlayed.FirstOrDefault(x => x.MidiNote == midiNote) == null)
+            {
+                NotesPlayed.Add(new Note(midiNote));
+            }
+        }
+
+        public void DeselectNote(int midiNote)
+        {
+            Note note = _notesPlayed.FirstOrDefault(x => x.MidiNote == midiNote);
+            if (note != null)
+            {
+                NotesPlayed.Remove(note);
+            }
+        }
+
+        public void ProcessNotes()
+        {
+            if (Game == null)
+            {
+                return;
+            }
+
+            var result = Game.CheckChordPlayed(NotesPlayed.ToList());
+            ChordPlayed = result.Played;
+            ChordPlayedBackground = result.Correct ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Red);
+        }
+
+        public void SelectChords()
+        {
+            if (IsGameActive)
+            {
+                StopGame();
+            }
+
+            if (ChordsSelected == null)
+            {
+                ChordsSelected = new List<Chord>();
+            }
+
+            ChordsSelected.Clear();
+            if (MajorChord)
+            {
+                ChordsSelected.AddRange(Chords.ChordsList.Where(x => x.ChordType == ChordType.Major));
+            }
+            if (MajorChordInv1)
+            {
+                ChordsSelected.AddRange(Chords.ChordsList.Where(x => x.ChordType == ChordType.MajorInv1));
+            }
+            if (MajorChordInv2)
+            {
+                ChordsSelected.AddRange(Chords.ChordsList.Where(x => x.ChordType == ChordType.MajorInv2));
+            }
+
+            if (MinorChord)
+            {
+                ChordsSelected.AddRange(Chords.ChordsList.Where(x => x.ChordType == ChordType.Minor));
+            }
+            if (MinorChordInv1)
+            {
+                ChordsSelected.AddRange(Chords.ChordsList.Where(x => x.ChordType == ChordType.MinorInv1));
+            }
+            if (MinorChordInv2)
+            {
+                ChordsSelected.AddRange(Chords.ChordsList.Where(x => x.ChordType == ChordType.MinorInv2));
+            }
         }
     }
 }

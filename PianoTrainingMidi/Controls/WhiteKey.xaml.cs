@@ -36,8 +36,17 @@ namespace PianoTrainingMidi.Controls
         }
 
         public static readonly DependencyProperty IsActiveProperty =
-            DependencyProperty.Register("IsActive", typeof(bool), typeof(WhiteKey), new PropertyMetadata(false));
+            DependencyProperty.Register("IsActive", typeof(bool), typeof(WhiteKey), new PropertyMetadata(false, OnActiveChanged));
+
+        private static void OnActiveChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            WhiteKey key = (WhiteKey)d;
+            key.OnActivated?.Invoke();
+        }
         #endregion
+
+        public delegate void Activated();
+        public event Activated OnActivated;
 
         public WhiteKey()
         {

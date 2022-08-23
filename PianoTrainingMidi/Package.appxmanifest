@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="2781e793-55c5-4992-a282-d37775672d09"
-    Publisher="CN=marti"
-    Version="1.0.0.0" />
+    Name="PianoTrainingMidi"
+    Publisher="CN=Tirion Experience"
+    Version="1.0.15.0" />
 
   <mp:PhoneIdentity PhoneProductId="2781e793-55c5-4992-a282-d37775672d09" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>PianoTrainingMidi</DisplayName>
-    <PublisherDisplayName>marti</PublisherDisplayName>
+    <PublisherDisplayName>Tirion Experience</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
