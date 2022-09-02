@@ -59,13 +59,7 @@ namespace PianoTrainingMidi.ViewModels
         #region property ChordPlayedString
         public string ChordPlayedString
         {
-            get 
-            { 
-                if (!IsGameActive)
-                {
-                    return "";
-                }
-                return ChordPlayed == null ? "" : ChordPlayed.Name; }
+            get { return ChordPlayed == null ? "" : ChordPlayed.Name; }
         }
         #endregion
 
@@ -214,8 +208,7 @@ namespace PianoTrainingMidi.ViewModels
                 }
                 else
                 {
-                    ChordToPlayString = "";
-                    CanStartGame = false;
+                    StopGame();
                 }
             }
 
@@ -223,7 +216,7 @@ namespace PianoTrainingMidi.ViewModels
             OnPropertyChanged(nameof(IsGameActive));
         }
 
-        public void SelectNote(int midiNote)
+        public void PressNote(int midiNote)
         {
             if (_notesPlayed.FirstOrDefault(x => x.MidiNote == midiNote) == null)
             {
@@ -231,7 +224,7 @@ namespace PianoTrainingMidi.ViewModels
             }
         }
 
-        public void DeselectNote(int midiNote)
+        public void UnpressNote(int midiNote)
         {
             Note note = _notesPlayed.FirstOrDefault(x => x.MidiNote == midiNote);
             if (note != null)
@@ -244,12 +237,18 @@ namespace PianoTrainingMidi.ViewModels
         {
             if (Game == null)
             {
+                ChordPlayed = Chords.GetChordPlayed(NotesPlayed.ToList());
                 return;
             }
 
             var result = Game.CheckChordPlayed(NotesPlayed.ToList());
             ChordPlayed = result.Played;
             ChordPlayedBackground = result.Correct ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Red);
+
+            if (result.Correct)
+            {
+                NextChord();
+            }
         }
 
         public void SelectChords()

@@ -41,6 +41,17 @@ namespace PianoTrainingMidi.Models
             return ChordsList.FirstOrDefault(x => x.ChordString == played) != null;
         }
 
+        public Chord GetChordPlayed(List<Note> notes)
+        {
+            if (notes == null || !notes.Any())
+            {
+                return null;
+            }
+
+            string playedString = string.Join("-", notes.OrderBy(x => x.MidiNote).Select(x => x.NoteLetter));
+            return ChordsList.FirstOrDefault(x => x.ChordString == playedString);
+        }
+
         private Chord GetMajorChord(Note note)
         {
             int index = NotesList.IndexOf(note);

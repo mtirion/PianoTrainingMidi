@@ -13,8 +13,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
@@ -31,6 +31,8 @@
                           IsChecked="{x:Bind ViewModel.MinorChordInv1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
             <ToggleButton Content="Minor Inv2" Width="120" Height="60" Margin="10,0,0,0"
                           IsChecked="{x:Bind ViewModel.MinorChordInv2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+
+            <!--<Button Content="Press chord" Click="Test_Click" Margin="50,0,0,0" />-->
         </StackPanel>
 
         <Grid Grid.Row="1" Margin="10">
@@ -38,148 +40,7 @@
                        FontSize="20" HorizontalAlignment="Center" />
         </Grid>
         
-        <Grid Grid.Row="2" Margin="20">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40,0,0,0">
-                <StackPanel >
-                    <TextBlock Text="{x:Bind ViewModel.Game.NumberPlayed, Mode=OneWay}" Width="200" FontSize="150" FontWeight="Bold" TextAlignment="Right" />
-                </StackPanel>
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40,0,0,0">
-                    <TextBlock Text="{x:Bind ViewModel.Game.NumberCorrect, Mode=OneWay}" FontSize="60" Foreground="Green" FontWeight="Bold" TextAlignment="Center" />
-                    <TextBlock Text="{x:Bind ViewModel.Game.NumberWrong, Mode=OneWay}" FontSize="60" Foreground="Red" FontWeight="Bold" TextAlignment="Center" />
-                </StackPanel>
-            </StackPanel>
-            <Grid HorizontalAlignment="Center">
-                <StackPanel x:Name="Keyboard" Orientation="Horizontal">
-                    <c:Octave StartMidiNote="48" />
-                    <c:Octave StartMidiNote="60" />
-                    <c:Octave StartMidiNote="72" />
-                </StackPanel>
-                <!--StackPanel Orientation="Horizontal">
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[0].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[0].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[0].IsActive, Mode=OneWay}" />
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[2].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[2].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[2].IsActive, Mode=OneWay}" />
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[4].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[4].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[4].IsActive, Mode=OneWay}" />
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[5].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[5].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[5].IsActive, Mode=OneWay}" />
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[7].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[7].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[7].IsActive, Mode=OneWay}" />
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[9].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[9].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[9].IsActive, Mode=OneWay}" />
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[11].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[11].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[11].IsActive, Mode=OneWay}" />
-
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[12].MidiNote}"
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[12].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[12].IsActive, Mode=OneWay}" />
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[14].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[14].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[14].IsActive, Mode=OneWay}" />
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[16].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[16].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[16].IsActive, Mode=OneWay}" />
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[17].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[17].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[17].IsActive, Mode=OneWay}" />
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[19].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[19].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[19].IsActive, Mode=OneWay}" />
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[21].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[21].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[21].IsActive, Mode=OneWay}" />
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[23].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[23].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[23].IsActive, Mode=OneWay}" />
-
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[24].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[24].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[24].IsActive, Mode=OneWay}" />
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[26].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[26].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[26].IsActive, Mode=OneWay}" />
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[28].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[28].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[28].IsActive, Mode=OneWay}" />
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[29].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[29].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[29].IsActive, Mode=OneWay}" />
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[31].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[31].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[31].IsActive, Mode=OneWay}" />
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[33].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[33].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[33].IsActive, Mode=OneWay}" />
-                    <c:WhiteKey MidiNote="{x:Bind ViewModel.KeyboardNotes[35].MidiNote}" 
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[35].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[35].IsActive, Mode=OneWay}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Horizontal">
-                        <c:BlackKey MidiNote="{x:Bind ViewModel.KeyboardNotes[1].MidiNote}" Margin="28,0,0,0"
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[1].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[1].IsActive, Mode=OneWay}" />
-                        <c:BlackKey MidiNote="{x:Bind ViewModel.KeyboardNotes[3].MidiNote}" Margin="28,0,0,0"
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[3].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[3].IsActive, Mode=OneWay}" />
-                        <c:BlackKey MidiNote="{x:Bind ViewModel.KeyboardNotes[6].MidiNote}" Margin="60,0,0,0"
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[6].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[6].IsActive, Mode=OneWay}" />
-                        <c:BlackKey MidiNote="{x:Bind ViewModel.KeyboardNotes[8].MidiNote}" Margin="28,0,0,0"
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[8].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[8].IsActive, Mode=OneWay}" />
-                        <c:BlackKey MidiNote="{x:Bind ViewModel.KeyboardNotes[10].MidiNote}" Margin="26,0,0,0"
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[10].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[10].IsActive, Mode=OneWay}" />
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal" Margin="26,0,0,0">
-                        <c:BlackKey MidiNote="{x:Bind ViewModel.KeyboardNotes[13].MidiNote}" Margin="28,0,0,0"
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[13].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[13].IsActive, Mode=OneWay}" />
-                        <c:BlackKey MidiNote="{x:Bind ViewModel.KeyboardNotes[15].MidiNote}" Margin="28,0,0,0"
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[15].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[15].IsActive, Mode=OneWay}" />
-                        <c:BlackKey MidiNote="{x:Bind ViewModel.KeyboardNotes[18].MidiNote}" Margin="60,0,0,0"
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[18].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[18].IsActive, Mode=OneWay}" />
-                        <c:BlackKey MidiNote="{x:Bind ViewModel.KeyboardNotes[20].MidiNote}" Margin="28,0,0,0"
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[20].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[20].IsActive, Mode=OneWay}" />
-                        <c:BlackKey MidiNote="{x:Bind ViewModel.KeyboardNotes[22].MidiNote}" Margin="26,0,0,0"
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[22].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[22].IsActive, Mode=OneWay}" />
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal" Margin="26,0,0,0">
-                        <c:BlackKey MidiNote="{x:Bind ViewModel.KeyboardNotes[25].MidiNote}" Margin="28,0,0,0"
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[25].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[25].IsActive, Mode=OneWay}" />
-                        <c:BlackKey MidiNote="{x:Bind ViewModel.KeyboardNotes[27].MidiNote}" Margin="28,0,0,0"
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[27].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[27].IsActive, Mode=OneWay}" />
-                        <c:BlackKey MidiNote="{x:Bind ViewModel.KeyboardNotes[30].MidiNote}" Margin="60,0,0,0"
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[30].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[30].IsActive, Mode=OneWay}" />
-                        <c:BlackKey MidiNote="{x:Bind ViewModel.KeyboardNotes[32].MidiNote}" Margin="28,0,0,0"
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[32].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[32].IsActive, Mode=OneWay}" />
-                        <c:BlackKey MidiNote="{x:Bind ViewModel.KeyboardNotes[34].MidiNote}" Margin="26,0,0,0"
-                                NoteLetter="{x:Bind ViewModel.KeyboardNotes[34].NoteLetter}" 
-                                IsActive="{x:Bind ViewModel.KeyboardNotes[34].IsActive, Mode=OneWay}" />
-                    </StackPanel>
-                </StackPanel -->
-            </Grid>
-        </Grid>
-
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="10" />
@@ -187,25 +48,51 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <TextBlock Text="PLAY:" FontSize="60" Visibility="{x:Bind ViewModel.IsGameActive, Mode=OneWay}"
-                           HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0" />
-                <TextBlock Text="{x:Bind ViewModel.ChordToPlayString, Mode=OneWay}" 
-                           FontSize="100" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <Button x:Name="RestartButton" Content="Start" 
-                        FontSize="40" Width="240" Height="120" Background="#0078d4" Foreground="White"
-                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                        Visibility="{x:Bind ViewModel.CanStartGame, Mode=OneWay}" Click="Practice_Click" />
-                <Button Content="Next" Visibility="{x:Bind ViewModel.IsGameActive, Mode=OneWay}" 
+                <Grid  Visibility="{x:Bind ViewModel.IsGameActive, Mode=OneWay}" >
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,40,0">
+                        <StackPanel >
+                            <TextBlock Text="{x:Bind ViewModel.Game.NumberPlayed, Mode=OneWay}" 
+                                       Width="200" FontSize="120" FontWeight="Bold" TextAlignment="Right" />
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40,0,0,0">
+                            <TextBlock Text="{x:Bind ViewModel.Game.NumberCorrect, Mode=OneWay}" 
+                                       FontSize="40" Foreground="Green" FontWeight="Bold" TextAlignment="Right" />
+                            <TextBlock Text="{x:Bind ViewModel.Game.NumberWrong, Mode=OneWay}" 
+                                       FontSize="40" Foreground="Red" FontWeight="Bold" TextAlignment="Right" />
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0">
+                        <TextBlock Text="PLAY" FontSize="60" TextAlignment="Center" />
+                        <TextBlock Text="{x:Bind ViewModel.ChordToPlayString, Mode=OneWay}" 
+                                   FontSize="100" FontWeight="Bold" />
+                    </StackPanel>
+
+                    <Button Content="Next"
                         FontSize="30" Width="160" Height="80" Background="#0078d4" Foreground="White"
                         HorizontalAlignment="Right" VerticalAlignment="Bottom"
                         Click="Next_Click" Margin="0,0,20,20" />
+                </Grid>
+                
+                <Button x:Name="RestartButton" Content="Practice" 
+                        FontSize="40" Width="240" Height="120" Background="#0078d4" Foreground="White"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Visibility="{x:Bind ViewModel.CanStartGame, Mode=OneWay}" Click="Practice_Click" />
             </Grid>
 
             <Rectangle Grid.Column="1" Fill="Black" />
 
             <Grid Grid.Column="2" Background="{x:Bind ViewModel.ChordPlayedBackground, Mode=OneWay}">
-                <TextBlock Text="{x:Bind ViewModel.ChordPlayedString, Mode=OneWay}" Foreground="White" 
+                <TextBlock Text="{x:Bind ViewModel.ChordPlayedString, Mode=OneWay}" Foreground="Black" 
                            FontSize="100" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="3" Margin="20">
+            <Grid HorizontalAlignment="Center" MaxHeight="300">
+                <Viewbox>
+                    <c:Keyboard x:Name="Keyboard" StartMidiNote="21" EndMidiNote="108"  />
+                </Viewbox>
             </Grid>
         </Grid>
     </Grid>

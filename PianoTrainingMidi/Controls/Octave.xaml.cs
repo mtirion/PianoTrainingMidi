@@ -1,6 +1,7 @@
 ﻿using PianoTrainingMidi.Models;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -24,8 +25,27 @@ namespace PianoTrainingMidi.Controls
             Octave o = (Octave)d;
             if ((int)e.NewValue != -1)
             {
-                int midiNote = (int)e.NewValue - ((int)e.NewValue % 12);
-                o.BuildOctave(midiNote);
+                o.BuildOctave((int)e.NewValue, o.EndMidiNote);
+            }
+        }
+        #endregion
+
+        #region property EndMidiNote (DP)
+        public int EndMidiNote
+        {
+            get { return (int)GetValue(EndMidiNoteProperty); }
+            set { SetValue(EndMidiNoteProperty, value); }
+        }
+
+        public static readonly DependencyProperty EndMidiNoteProperty =
+            DependencyProperty.Register("EndMidiNote", typeof(int), typeof(Octave), new PropertyMetadata(-1, OnEndNoteChanged));
+
+        private static void OnEndNoteChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            Octave o = (Octave)d;
+            if ((int)e.NewValue != -1)
+            {
+                o.BuildOctave(o.StartMidiNote, (int)e.NewValue);
             }
         }
         #endregion
@@ -42,7 +62,7 @@ namespace PianoTrainingMidi.Controls
             this.InitializeComponent();
         }
 
-        public void SetNoteActive(int midiNote)
+        public void PressNote(int midiNote)
         {
             if (_keys.TryGetValue(midiNote, out UIElement control))
             {
@@ -57,7 +77,7 @@ namespace PianoTrainingMidi.Controls
             }
         }
 
-        public void SetNoteInactive(int midiNote)
+        public void UnpressNote(int midiNote)
         {
             if (_keys.TryGetValue(midiNote, out UIElement control))
             {
@@ -76,45 +96,69 @@ namespace PianoTrainingMidi.Controls
         /// Build the octave from start MIDI note.
         /// </summary>
         /// <param name="startMidiNote">Start MIDI note.</param>
-        public void BuildOctave(int startMidiNote)
+        /// <param name="endMidiNote">End MIDI note.</param>
+        public void BuildOctave(int startMidiNote, int endMidiNote)
         {
             WhiteKeys.Children.Clear();
             BlackKeys.Children.Clear();
             _keys.Clear();
 
-            int blackIndex = 0;
-            for (int midiNote = startMidiNote; midiNote < startMidiNote + 12; midiNote++)
+            if (endMidiNote < startMidiNote)
             {
+                return;
+            }
 
+            int startOctave = startMidiNote - (startMidiNote % 12);
+            int end = Math.Min(startOctave + 12, endMidiNote + 1);
+
+            int blackIndex = 0;
+            bool isFirstBlackKey = true;
+            for (int midiNote = startOctave; midiNote < end; midiNote++)
+            {
                 Note note = new Note(midiNote);
                 if (note.IsWhiteKey)
                 {
-                    WhiteKey white = new WhiteKey
+                    if (midiNote >= startMidiNote)
                     {
-                        MidiNote = note.MidiNote,
-                        NoteLetter = note.NoteLetter,
-                    };
-                    Binding b = new Binding();
-                    b.Mode = BindingMode.OneWay;
-                    b.Source = note.IsActive;
-                    SetBinding(WhiteKey.IsActiveProperty, b);
-                    WhiteKeys.Children.Add(white);
-                    _keys.Add(midiNote, white);
+                        WhiteKey white = new WhiteKey
+                        {
+                            MidiNote = note.MidiNote,
+                            NoteLetter = note.NoteLetter,
+                        };
+                        Binding b = new Binding();
+                        b.Mode = BindingMode.OneWay;
+                        b.Source = note.IsActive;
+                        SetBinding(WhiteKey.IsActiveProperty, b);
+                        WhiteKeys.Children.Add(white);
+                        _keys.Add(midiNote, white);
+                    }
                 }
                 else
                 {
-                    BlackKey black = new BlackKey
+                    if (midiNote >= startMidiNote)
                     {
-                        MidiNote = note.MidiNote,
-                        NoteLetter = note.NoteLetter,
-                    };
-                    Binding b = new Binding();
-                    b.Mode = BindingMode.OneWay;
-                    b.Source = note.IsActive;
-                    SetBinding(WhiteKey.IsActiveProperty, b);
-                    black.Margin = new Thickness(_blackNotesMargins[blackIndex++],0,0,0);
-                    BlackKeys.Children.Add(black);
-                    _keys.Add(midiNote, black);
+                        BlackKey black = new BlackKey
+                        {
+                            MidiNote = note.MidiNote,
+                            NoteLetter = note.NoteLetter,
+                        };
+                        Binding b = new Binding();
+                        b.Mode = BindingMode.OneWay;
+                        b.Source = note.IsActive;
+                        SetBinding(WhiteKey.IsActiveProperty, b);
+                        int left = _blackNotesMargins[blackIndex];
+                        if (blackIndex > 0 && isFirstBlackKey)
+                        {
+                            left += left / 2;
+                        }
+                        black.Margin = new Thickness(left, 0, 0, 0);
+                        BlackKeys.Children.Add(black);
+                        _keys.Add(midiNote, black);
+
+                        isFirstBlackKey = false;
+                    }
+
+                    blackIndex++;
                 }
             }
         }

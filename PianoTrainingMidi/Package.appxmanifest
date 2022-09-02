@@ -9,7 +9,7 @@
   <Identity
     Name="PianoTrainingMidi"
     Publisher="CN=Tirion Experience"
-    Version="1.0.15.0" />
+    Version="1.0.19.0" />
 
   <mp:PhoneIdentity PhoneProductId="2781e793-55c5-4992-a282-d37775672d09" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

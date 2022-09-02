@@ -20,12 +20,21 @@ namespace PianoTrainingMidi.Models
 
         public Chord GetCopy()
         {
-            return new Chord()
+            Chord chord = new Chord()
             {
                 ChordType = ChordType,
                 Name = Name,
-                Notes = new List<Note>(Notes),
+                Notes = new List<Note>()
             };
+
+            foreach (Note baseNote in Notes)
+            {
+                chord.Notes.Add(baseNote.GetCopy());
+            }
+
+            chord.SetString();
+
+            return chord;
         }
     }
 }

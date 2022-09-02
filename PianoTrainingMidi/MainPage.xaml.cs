@@ -4,6 +4,7 @@ using PianoTrainingMidi.ViewModels;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Devices.Midi;
 using Windows.UI;
@@ -96,7 +97,7 @@ namespace PianoTrainingMidi
                         case MidiMessageType.NoteOff:
                             _processTimer.Stop();
                             MidiNoteOffMessage off = (MidiNoteOffMessage)msg;
-                            DeselectNote(off.Note);
+                            UnpressNote(off.Note);
 
                             if (ViewModel.NotesPlayed.Count >= 3)
                             {
@@ -109,11 +110,11 @@ namespace PianoTrainingMidi
                             MidiNoteOnMessage on = (MidiNoteOnMessage)msg;
                             if (on.Velocity > 0)
                             {
-                                SelectNote(on.Note);
+                                PressNote(on.Note);
                             }
                             else
                             {
-                                DeselectNote(on.Note);
+                                UnpressNote(on.Note);
                             }
 
                             if (ViewModel.NotesPlayed.Count >= 3)
@@ -131,28 +132,16 @@ namespace PianoTrainingMidi
             }
         }
 
-        private void SelectNote(int midiNote)
+        private void PressNote(int midiNote)
         {
-            foreach (UIElement octave in Keyboard.Children)
-            {
-                if (octave is Octave)
-                {
-                    ((Octave)octave).SetNoteActive(midiNote);
-                }
-            }
-            ViewModel.SelectNote(midiNote);
+            Keyboard.PressNote(midiNote);
+            ViewModel.PressNote(midiNote);
         }
 
-        private void DeselectNote(int midiNote)
+        private void UnpressNote(int midiNote)
         {
-            foreach (UIElement octave in Keyboard.Children)
-            {
-                if (octave is Octave)
-                {
-                    ((Octave)octave).SetNoteInactive(midiNote);
-                }
-            }
-            ViewModel.DeselectNote(midiNote);
+            Keyboard.UnpressNote(midiNote);
+            ViewModel.UnpressNote(midiNote);
         }
 
         private void Practice_Click(object sender, RoutedEventArgs e)
@@ -164,6 +153,10 @@ namespace PianoTrainingMidi
         private void Next_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.NextChord();
+        }
+
+        private void Test_Click(object sender, RoutedEventArgs e)
+        {
         }
     }
 }
